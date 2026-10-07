@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fbf7f4;
+  --foreground: #1c1917;
+  --surface: #f5ede7;
+  --surface-card: rgba(255, 255, 255, 0.78);
+  --border-warm: rgba(231, 216, 206, 0.85);
+  --accent-terracotta: #d97768;
+  --accent-rose: #e28c7c;
+  --accent-plum: #766378;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans, system-ui, -apple-system, sans-serif);
+  --font-mono: var(--font-geist-mono, monospace);
+  --font-serif: var(--font-serif, "Playfair Display", Georgia, serif);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Warm Limestone Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f5ede7;
+}
+::-webkit-scrollbar-thumb {
+  background: #d6c5bb;
+  border-radius: 9999px;
+  border: 2px solid #f5ede7;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b8a397;
+}
+
+/* Unseen Studio Frosted Glass & Surface Utilities */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(231, 216, 206, 0.9);
+  box-shadow: 0 10px 30px -10px rgba(120, 80, 60, 0.05);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-panel-hover:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(217, 119, 104, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(120, 80, 60, 0.12);
+}
+
+.sandstone-card {
+  background: #f7efe9;
+  border: 1px solid #ebdcd2;
+  box-shadow: 0 4px 20px -4px rgba(100, 70, 50, 0.04);
+}
+
+.cyber-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(180, 140, 120, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(180, 140, 120, 0.08) 1px, transparent 1px);
+}
+
+.radial-glow {
+  background: radial-gradient(circle at 50% 30%, rgba(226, 140, 124, 0.15), transparent 70%);
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #1c1917 0%, #d97768 60%, #766378 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #1c1917 0%, #059669 60%, #0284c7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
