@@ -28,17 +28,44 @@ export default function Contact() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText(PERSONAL_INFO.socials.email);
+    if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(PERSONAL_INFO.socials.email).catch(() => {});
+    }
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate submission delay and trigger confetti
-    setTimeout(() => {
+    try {
+      // Send the email silently in the background using Web3Forms
+      const WEB3FORMS_ACCESS_KEY = "db544908-d00e-473c-a019-43bde0582029"; 
+      
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          from_name: formData.name ? `${formData.name} (Portfolio)` : "Portfolio Inquiry",
+          replyto: formData.email,
+        }),
+      });
+
+      const result = await response.json();
+      
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Failed to submit form");
+      }
+
       setIsSubmitting(false);
       setIsSuccess(true);
       confetti({
@@ -47,7 +74,16 @@ export default function Contact() {
         origin: { y: 0.6 },
         colors: ["#06b6d4", "#8b5cf6", "#10b981", "#ffffff"],
       });
-    }, 800);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setIsSubmitting(false);
+      // Fallback to mailto if the fetch fails or if key is missing
+      window.location.href = `mailto:abhisekpattnaik04@gmail.com?subject=${encodeURIComponent(
+        formData.subject
+      )}&body=${encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+      )}`;
+    }
   };
 
   return (
@@ -123,32 +159,6 @@ export default function Contact() {
                   </p>
                 )}
               </div>
-
-              {/* WhatsApp Quick Message */}
-              <motion.a
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                href={PERSONAL_INFO.socials.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center justify-between p-4 rounded-2xl bg-emerald-50/80 border border-emerald-300/70 hover:bg-emerald-100/70 transition-colors group shadow-sm"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-600/10 text-emerald-700 flex items-center justify-center font-bold">
-                    WA
-                  </div>
-                  <div>
-                    <div className="text-sm font-bold text-stone-900 group-hover:text-emerald-800 transition-colors">
-                      Chat on WhatsApp
-                    </div>
-                    <div className="text-xs text-stone-500">
-                      Instant direct messaging
-                    </div>
-                  </div>
-                </div>
-                <ExternalLink className="w-4 h-4 text-emerald-700 group-hover:translate-x-0.5 transition-transform" />
-              </motion.a>
-
               {/* Social Channels */}
               <div className="pt-4 border-t border-[#e7d8ce] space-y-3">
                 <div className="text-xs font-mono uppercase tracking-wider text-stone-500 font-semibold">
