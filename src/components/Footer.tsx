@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { ArrowUp, Mail, Heart, Sparkles, Terminal, ExternalLink } from "lucide-react";
+import { ArrowUp, Mail, ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
 import { GithubIcon, LinkedinIcon } from "./SocialIcons";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 
@@ -107,7 +108,9 @@ export default function Footer() {
               Connect Channels
             </div>
             <div className="flex items-center gap-2.5">
-              <a
+              <motion.a
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
                 href={PERSONAL_INFO.socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -115,8 +118,10 @@ export default function Footer() {
                 title="GitHub"
               >
                 <GithubIcon className="w-4 h-4" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
                 href={PERSONAL_INFO.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -124,14 +129,16 @@ export default function Footer() {
                 title="LinkedIn"
               >
                 <LinkedinIcon className="w-4 h-4" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
                 href={`mailto:${PERSONAL_INFO.socials.email}`}
                 className="w-9 h-9 rounded-xl bg-white/80 border border-[#e7d8ce] flex items-center justify-center text-stone-700 hover:text-stone-950 hover:bg-white transition-colors shadow-sm"
                 title="Email Me"
               >
                 <Mail className="w-4 h-4" />
-              </a>
+              </motion.a>
             </div>
 
             <p className="text-[11px] text-stone-500 font-mono">
@@ -146,13 +153,15 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} {PERSONAL_INFO.fullName}. All rights reserved.
           </div>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.06, y: -2 }}
+            whileTap={{ scale: 0.95 }}
             onClick={scrollToTop}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white hover:bg-stone-100 text-stone-700 hover:text-stone-950 border border-[#e7d8ce] transition-colors font-mono text-[11px] shadow-sm"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-stone-50 text-stone-700 hover:text-stone-950 border border-[#e7d8ce] transition-colors font-mono text-[11px] shadow-sm"
           >
             <span>Back to top</span>
             <ArrowUp className="w-3.5 h-3.5 text-stone-900" />
-          </button>
+          </motion.button>
         </div>
       </div>
     </footer>

@@ -12,6 +12,7 @@ import {
   PhoneCall, 
   ExternalLink
 } from "lucide-react";
+import { motion } from "framer-motion";
 import { GithubIcon, LinkedinIcon } from "./SocialIcons";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 
@@ -56,7 +57,13 @@ export default function Contact() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center space-y-3 mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col items-center text-center space-y-3 mb-16"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-300/50 text-rose-700 text-xs font-mono tracking-wider uppercase">
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Initiate Collaboration</span>
@@ -67,11 +74,17 @@ export default function Contact() {
           <p className="text-stone-600 max-w-2xl text-base sm:text-lg">
             Have a project in mind, need high-throughput APIs, or looking to add a dedicated full stack developer to your team? Let&apos;s talk.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           {/* Left Column: Direct channels & Quick Connect */}
-          <div className="lg:col-span-5 space-y-6">
+          <motion.div
+            initial={{ opacity: 0, x: -25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 space-y-6"
+          >
             <div className="glass-panel rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm">
               <div>
                 <h3 className="text-xl font-bold text-stone-950">Direct Channels</h3>
@@ -90,7 +103,9 @@ export default function Contact() {
                   <div className="font-mono text-sm sm:text-base text-stone-900 font-medium truncate">
                     {PERSONAL_INFO.socials.email}
                   </div>
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.08 }}
+                    whileTap={{ scale: 0.92 }}
                     onClick={handleCopyEmail}
                     className="p-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 hover:text-stone-900 transition-colors flex-shrink-0"
                     title="Copy Email"
@@ -100,7 +115,7 @@ export default function Contact() {
                     ) : (
                       <Copy className="w-4 h-4" />
                     )}
-                  </button>
+                  </motion.button>
                 </div>
                 {copiedEmail && (
                   <p className="text-[11px] font-mono text-emerald-700 animate-in fade-in">
@@ -110,7 +125,9 @@ export default function Contact() {
               </div>
 
               {/* WhatsApp Quick Message */}
-              <a
+              <motion.a
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 href={PERSONAL_INFO.socials.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -130,7 +147,7 @@ export default function Contact() {
                   </div>
                 </div>
                 <ExternalLink className="w-4 h-4 text-emerald-700 group-hover:translate-x-0.5 transition-transform" />
-              </a>
+              </motion.a>
 
               {/* Social Channels */}
               <div className="pt-4 border-t border-[#e7d8ce] space-y-3">
@@ -138,7 +155,9 @@ export default function Contact() {
                   Connect &amp; Follow
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                  <a
+                  <motion.a
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
                     href={PERSONAL_INFO.socials.github}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -146,8 +165,10 @@ export default function Contact() {
                   >
                     <GithubIcon className="w-4 h-4 text-stone-600" />
                     <span>GitHub</span>
-                  </a>
-                  <a
+                  </motion.a>
+                  <motion.a
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
                     href={PERSONAL_INFO.socials.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -155,14 +176,20 @@ export default function Contact() {
                   >
                     <LinkedinIcon className="w-4 h-4 text-blue-600" />
                     <span>LinkedIn</span>
-                  </a>
+                  </motion.a>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Contact Message Form */}
-          <div className="lg:col-span-7">
+          <motion.div
+            initial={{ opacity: 0, x: 25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7"
+          >
             <div className="glass-panel rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm">
               <div>
                 <h3 className="text-xl font-bold text-stone-950">Send a Message</h3>
@@ -272,10 +299,12 @@ export default function Contact() {
                     />
                   </div>
 
-                  <button
+                  <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm text-white bg-stone-900 hover:bg-stone-800 shadow-md shadow-stone-900/10 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+                    whileHover={{ scale: 1.015 }}
+                    whileTap={{ scale: 0.985 }}
+                    className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm text-white bg-stone-900 hover:bg-stone-800 shadow-md shadow-stone-900/10 transition-colors disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <span>Sending payload...</span>
@@ -285,11 +314,11 @@ export default function Contact() {
                         <span>Dispatch Message</span>
                       </>
                     )}
-                  </button>
+                  </motion.button>
                 </form>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

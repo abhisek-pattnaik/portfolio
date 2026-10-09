@@ -7,11 +7,10 @@ import {
   Smartphone, 
   Server, 
   Database, 
-  Sparkles, 
   Search, 
-  Check, 
   Cpu 
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { SKILL_CATEGORIES } from "@/data/portfolioData";
 
 export default function Skills() {
@@ -62,7 +61,13 @@ export default function Skills() {
     <section id="skills" className="py-24 relative overflow-hidden bg-[#fbf7f4] border-t border-[#e7d8ce]/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center space-y-3 mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col items-center text-center space-y-3 mb-12"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-300/50 text-rose-700 text-xs font-mono tracking-wider uppercase">
             <Cpu className="w-3.5 h-3.5" />
             <span>Technical Capabilities</span>
@@ -73,7 +78,7 @@ export default function Skills() {
           <p className="text-stone-600 max-w-2xl text-base sm:text-lg">
             A comprehensive overview of the modern languages, frameworks, databases, and architectural tools I use in daily production.
           </p>
-        </div>
+        </motion.div>
 
         {/* Filter Controls & Search */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-[#e7d8ce]">
@@ -82,17 +87,26 @@ export default function Skills() {
             {categories.map((cat) => {
               const isSelected = selectedCategory === cat;
               return (
-                <button
+                <motion.button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-xl text-xs font-medium transition-all ${
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                  className={`relative px-4 py-2 rounded-xl text-xs font-medium transition-colors ${
                     isSelected
-                      ? "bg-stone-900 text-white font-bold shadow-md shadow-stone-900/10"
+                      ? "text-white font-bold"
                       : "bg-white/80 text-stone-600 hover:text-stone-900 hover:bg-white border border-[#e7d8ce]"
                   }`}
                 >
-                  {cat}
-                </button>
+                  {isSelected && (
+                    <motion.div
+                      layoutId="activeSkillCategory"
+                      className="absolute inset-0 bg-stone-900 rounded-xl shadow-md shadow-stone-900/15"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">{cat}</span>
+                </motion.button>
               );
             })}
           </div>
@@ -119,80 +133,94 @@ export default function Skills() {
         </div>
 
         {/* Skills Display Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredCategories.map((catGroup, idx) => {
-            const Icon = getCategoryIcon(catGroup.iconName);
-            return (
-              <div
-                key={idx}
-                className="glass-panel rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 relative overflow-hidden"
-              >
-                {/* Header */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-300/40 flex items-center justify-center text-rose-700">
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-bold text-stone-950 tracking-tight">
-                          {catGroup.category}
-                        </h3>
-                        <p className="text-xs text-stone-500">{catGroup.description}</p>
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <AnimatePresence mode="popLayout">
+            {filteredCategories.map((catGroup) => {
+              const Icon = getCategoryIcon(catGroup.iconName);
+              return (
+                <motion.div
+                  key={catGroup.category}
+                  layout
+                  initial={{ opacity: 0, scale: 0.96, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.96, y: 20 }}
+                  transition={{ duration: 0.4 }}
+                  whileHover={{ y: -4 }}
+                  className="glass-panel rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 relative overflow-hidden shadow-sm hover:shadow-xl transition-shadow"
+                >
+                  {/* Header */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-300/40 flex items-center justify-center text-rose-700">
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-bold text-stone-950 tracking-tight">
+                            {catGroup.category}
+                          </h3>
+                          <p className="text-xs text-stone-500">{catGroup.description}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Skill Items */}
-                <div className="space-y-4">
-                  {catGroup.skills.map((skill, sIdx) => (
-                    <div
-                      key={sIdx}
-                      className="p-3.5 rounded-2xl bg-white/70 border border-[#e7d8ce] hover:border-stone-400 transition-colors space-y-2.5 shadow-sm"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="font-semibold text-sm text-stone-900">
-                            {skill.name}
-                          </span>
-                          {skill.highlight && (
-                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-rose-500/10 border border-rose-300/60 text-rose-700">
-                              Core
+                  {/* Skill Items */}
+                  <div className="space-y-4">
+                    {catGroup.skills.map((skill, sIdx) => (
+                      <motion.div
+                        key={sIdx}
+                        whileHover={{ scale: 1.01, backgroundColor: "rgba(255, 255, 255, 0.95)" }}
+                        transition={{ duration: 0.2 }}
+                        className="p-3.5 rounded-2xl bg-white/70 border border-[#e7d8ce] hover:border-stone-400 transition-colors space-y-2.5 shadow-sm"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span className="font-semibold text-sm text-stone-900">
+                              {skill.name}
                             </span>
-                          )}
-                        </div>
-                        <span className="font-mono text-xs text-stone-500 font-medium">
-                          {skill.level}%
-                        </span>
-                      </div>
-
-                      {/* Progress Bar */}
-                      <div className="w-full bg-stone-200/80 h-2 rounded-full overflow-hidden p-[1px] border border-[#e7d8ce]">
-                        <div
-                          className="h-full rounded-full bg-gradient-to-r from-stone-900 via-stone-700 to-rose-700 transition-all duration-1000"
-                          style={{ width: `${skill.level}%` }}
-                        />
-                      </div>
-
-                      {/* Tags */}
-                      <div className="flex flex-wrap gap-1.5 pt-1">
-                        {skill.tags.map((tag, tIdx) => (
-                          <span
-                            key={tIdx}
-                            className="text-[10px] font-mono bg-stone-100/90 text-stone-600 px-2 py-0.5 rounded-md border border-[#e7d8ce]"
-                          >
-                            #{tag}
+                            {skill.highlight && (
+                              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-rose-500/10 border border-rose-300/60 text-rose-700">
+                                Core
+                              </span>
+                            )}
+                          </div>
+                          <span className="font-mono text-xs text-stone-500 font-medium">
+                            {skill.level}%
                           </span>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                        </div>
+
+                        {/* Animated Progress Bar */}
+                        <div className="w-full bg-stone-200/80 h-2 rounded-full overflow-hidden p-[1px] border border-[#e7d8ce]">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.level}%` }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                            className="h-full rounded-full bg-gradient-to-r from-stone-900 via-stone-700 to-rose-700"
+                          />
+                        </div>
+
+                        {/* Tags */}
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {skill.tags.map((tag, tIdx) => (
+                            <motion.span
+                              key={tIdx}
+                              whileHover={{ scale: 1.05 }}
+                              className="text-[10px] font-mono bg-stone-100/90 text-stone-600 px-2 py-0.5 rounded-md border border-[#e7d8ce] transition-colors hover:text-stone-900 hover:border-stone-400"
+                            >
+                              #{tag}
+                            </motion.span>
+                          ))}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </motion.div>
 
         {filteredCategories.length === 0 && (
           <div className="py-16 text-center space-y-3">

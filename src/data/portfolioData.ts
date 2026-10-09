@@ -62,8 +62,8 @@ export const PERSONAL_INFO = {
     { label: "Core Stacks Mastered", value: "5+" },
   ],
   socials: {
-    github: "https://github.com",
-    linkedin: "https://linkedin.com",
+    github: "https://github.com/abhisek-pattnaik",
+    linkedin: "https://www.linkedin.com/in/abhisek-pattnaik-2727511ba/?isSelfProfile=true",
     email: "abhisekpattnaik04@gmail.com",
     whatsapp: "https://wa.me/?text=Hi%20Abhisek,%20I%20saw%20your%20portfolio!",
     resume: "https://drive.google.com/file/d/13wF6hZyQo7tDqFODqT5zKbXXWldM3UKP/view?usp=sharing",
@@ -135,7 +135,7 @@ export const PROJECTS: Project[] = [
     results: [
       "Building unified customer experience across native mobile apps (iOS & Android) and responsive web.",
       "Engineered real-time slot locking algorithm preventing duplicate reservations across all channels.",
-      "Integrated automated WhatsApp and email notification pipeline to slash customer no-shows.",
+      "Integrated automated WhatsApp and e  mail notification pipeline to slash customer no-shows.",
       "Automated staff commission calculations and multi-branch revenue tracking for administrators.",
     ],
     metrics: [

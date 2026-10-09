@@ -518,6 +518,7 @@ export default function UnseenDreamscapeCanvas() {
     // --- INTERACTIVE MOUSE PARALLAX & WATER RIPPLES ---
     const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
     let ripplePulse = 0;
+    let scrollY = 0;
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
@@ -532,7 +533,12 @@ export default function UnseenDreamscapeCanvas() {
       ripplePulse = 2.4; // Big ripple shockwave on click
     };
 
+    const handleScroll = () => {
+      scrollY = window.scrollY;
+    };
+
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     container.addEventListener("click", handleClick);
 
     // RESIZE LISTENER
@@ -552,18 +558,28 @@ export default function UnseenDreamscapeCanvas() {
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
+
+      // Performance optimization: skip rendering if hero is completely out of viewport
+      if (scrollY > window.innerHeight * 1.5) {
+        return;
+      }
+
       const elapsed = (performance.now() - startTime) * 0.001;
 
       // Smooth camera parallax
       mouse.x += (mouse.targetX - mouse.x) * 0.04;
       mouse.y += (mouse.targetY - mouse.y) * 0.04;
 
-      camera.position.x = mouse.x * 0.8;
-      camera.position.y = 2.2 + mouse.y * 0.45;
-      camera.lookAt(mouse.x * 0.3, 1.8, 0);
+      // Scroll-driven camera drift (adds cinematic immersion on scroll)
+      const scrollFactor = Math.min(scrollY / (window.innerHeight || 800), 1.2);
 
-      // Subtle breathing float on iridescent sphere
-      pearlSphere.position.y = 2.85 + Math.sin(elapsed * 1.2) * 0.12;
+      camera.position.x = mouse.x * 0.8;
+      camera.position.y = 2.2 + mouse.y * 0.45 + scrollFactor * 0.9;
+      camera.position.z = 7.5 + scrollFactor * 1.8;
+      camera.lookAt(mouse.x * 0.3, 1.8 + scrollFactor * 0.4, 0);
+
+      // Subtle breathing float on iridescent sphere with scroll elevation
+      pearlSphere.position.y = 2.85 + Math.sin(elapsed * 1.2) * 0.12 + scrollFactor * 0.5;
       pearlSphere.rotation.y = elapsed * 0.25;
 
       // Decay ripple impulse
@@ -586,6 +602,7 @@ export default function UnseenDreamscapeCanvas() {
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("scroll", handleScroll);
       container.removeEventListener("click", handleClick);
       window.removeEventListener("resize", handleResize);
 

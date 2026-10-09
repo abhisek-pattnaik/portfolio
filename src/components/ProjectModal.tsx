@@ -11,6 +11,7 @@ import {
   ShieldAlert, 
   Lightbulb 
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Project } from "@/data/portfolioData";
 
 interface ProjectModalProps {
@@ -33,20 +34,30 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     };
   }, [project, onClose]);
 
-  if (!project) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      {/* Backdrop */}
-      <div
-        onClick={onClose}
-        className="fixed inset-0 bg-stone-900/60 backdrop-blur-md transition-opacity animate-in fade-in"
-      />
+    <AnimatePresence>
+      {project && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-stone-900/60 backdrop-blur-md"
+          />
 
-      {/* Modal Dialog Content */}
-      <div className="relative w-full max-w-4xl max-h-[90vh] bg-[#fbf7f4] border border-[#e7d8ce] rounded-3xl shadow-2xl overflow-y-auto flex flex-col z-10 animate-in zoom-in-95 duration-200">
-        {/* Header */}
-        <div className="sticky top-0 z-20 bg-[#fbf7f4]/95 backdrop-blur-md px-6 py-4 border-b border-[#e7d8ce] flex items-center justify-between">
+          {/* Modal Dialog Content */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 16 }}
+            transition={{ type: "spring", damping: 26, stiffness: 320 }}
+            className="relative w-full max-w-4xl max-h-[90vh] bg-[#fbf7f4] border border-[#e7d8ce] rounded-3xl shadow-2xl overflow-y-auto flex flex-col z-10"
+          >
+            {/* Header */}
+            <div className="sticky top-0 z-20 bg-[#fbf7f4]/95 backdrop-blur-md px-6 py-4 border-b border-[#e7d8ce] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <span className="px-3 py-1 rounded-full text-xs font-mono font-medium bg-rose-500/10 border border-rose-300/60 text-rose-800">
               {project.badge}
@@ -248,7 +259,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             </a>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
+    )}
+  </AnimatePresence>
   );
 }

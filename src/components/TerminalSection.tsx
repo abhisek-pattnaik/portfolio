@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { Terminal as TerminalIcon, Sparkles, CornerDownLeft, Maximize2, Minimize2 } from "lucide-react";
+import { motion } from "framer-motion";
 import { PERSONAL_INFO, PROJECTS, SKILL_CATEGORIES } from "@/data/portfolioData";
 
 interface OutputLine {
@@ -237,7 +238,13 @@ export default function TerminalSection() {
     <section id="terminal" className="py-20 relative overflow-hidden bg-[#fbf7f4] border-t border-[#e7d8ce]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="flex flex-col items-center text-center space-y-3 mb-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col items-center text-center space-y-3 mb-10"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-300/50 text-rose-700 text-xs font-mono tracking-wider uppercase">
             <TerminalIcon className="w-3.5 h-3.5" />
             <span>Interactive Terminal</span>
@@ -248,12 +255,16 @@ export default function TerminalSection() {
           <p className="text-stone-600 max-w-xl text-sm">
             For engineers &amp; clients who prefer the command line: interact directly with my portfolio shell.
           </p>
-        </div>
+        </motion.div>
 
         {/* Terminal Window Container */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           onClick={() => inputRef.current?.focus()}
-          className="rounded-3xl border border-stone-800 bg-[#1c1917] shadow-2xl shadow-stone-900/15 overflow-hidden font-mono text-xs sm:text-sm"
+          className="rounded-3xl border border-stone-800 bg-[#1c1917] shadow-2xl shadow-stone-900/25 overflow-hidden font-mono text-xs sm:text-sm"
         >
           {/* Terminal Window Header Bar */}
           <div className="px-4 py-3 bg-stone-950/70 border-b border-stone-800 flex items-center justify-between">
@@ -277,8 +288,10 @@ export default function TerminalSection() {
           <div className="px-4 py-2 bg-stone-950/40 border-b border-stone-800/60 flex items-center gap-2 overflow-x-auto text-[11px]">
             <span className="text-stone-400 flex-shrink-0">Quick run:</span>
             {["help", "about", "skills", "projects", "education", "sudo hire"].map((cmd) => (
-              <button
+              <motion.button
                 key={cmd}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={(e) => {
                   e.stopPropagation();
                   handleCommand(cmd);
@@ -286,7 +299,7 @@ export default function TerminalSection() {
                 className="px-2.5 py-1 rounded-md bg-stone-800/90 text-stone-200 hover:text-white hover:bg-stone-700 transition-colors flex-shrink-0 border border-stone-700/60"
               >
                 {cmd}
-              </button>
+              </motion.button>
             ))}
           </div>
 
@@ -329,7 +342,7 @@ export default function TerminalSection() {
             </div>
             <div ref={bottomRef} />
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

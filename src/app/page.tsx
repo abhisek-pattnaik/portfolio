@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
+import ScrollProgress from "@/components/ScrollProgress";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
@@ -12,6 +13,9 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#fbf7f4] text-stone-900 flex flex-col selection:bg-rose-200 selection:text-stone-900">
+      {/* Global Scroll Progress Bar */}
+      <ScrollProgress />
+
       {/* Sticky Navigation */}
       <Navbar />
 
