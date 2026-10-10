@@ -7,10 +7,6 @@ import {
   MapPin, 
   Building2, 
   Smartphone, 
-  TrendingUp, 
-  ShieldCheck, 
-  Cpu,
-  Layers,
   CheckCircle2,
   Sparkles
 } from "lucide-react";
@@ -114,25 +110,6 @@ export default function CompanyExperience() {
                       <span className="font-semibold">{exp.period}</span>
                     </div>
                   </div>
-
-                  {/* Impact Metrics Bar if available */}
-                  {exp.metrics && exp.metrics.length > 0 && (
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                      {exp.metrics.map((metric, mIdx) => (
-                        <div
-                          key={mIdx}
-                          className="p-3.5 rounded-2xl bg-white/80 border border-[#e7d8ce] shadow-2xs flex flex-col justify-between"
-                        >
-                          <div className="text-[11px] font-mono text-stone-500 uppercase tracking-wider font-medium truncate">
-                            {metric.label}
-                          </div>
-                          <div className="text-base sm:text-lg font-bold text-stone-950 mt-1 font-mono text-rose-900">
-                            {metric.value}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
 
                   {/* Deliverables & Key Contributions */}
                   <div className="space-y-3">

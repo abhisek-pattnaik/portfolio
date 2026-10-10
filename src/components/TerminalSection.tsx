@@ -28,11 +28,21 @@ export default function TerminalSection() {
     },
   ]);
 
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const terminalBodyRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    // Prevent scrolling to the terminal on website initial load
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    // Scroll only the terminal's internal log container, never the entire page
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
+    }
   }, [output]);
 
   const handleCommand = (cmd: string) => {
@@ -304,7 +314,10 @@ export default function TerminalSection() {
           </div>
 
           {/* Terminal Body */}
-          <div className="p-4 sm:p-6 min-h-[300px] max-h-[440px] overflow-y-auto space-y-3 text-stone-200">
+          <div 
+            ref={terminalBodyRef}
+            className="p-4 sm:p-6 min-h-[300px] max-h-[440px] overflow-y-auto space-y-3 text-stone-200"
+          >
             {output.map((line) => (
               <div key={line.id} className="leading-relaxed">
                 {line.type === "command" && (
@@ -340,7 +353,6 @@ export default function TerminalSection() {
                 className="w-full bg-transparent text-white focus:outline-none placeholder-stone-500 font-mono text-xs sm:text-sm"
               />
             </div>
-            <div ref={bottomRef} />
           </div>
         </motion.div>
       </div>
