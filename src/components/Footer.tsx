@@ -55,6 +55,11 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
+                  <a href="#experience" className="hover:text-stone-950 transition-colors">
+                    Work Experience
+                  </a>
+                </li>
+                <li>
                   <a href="#projects" className="hover:text-stone-950 transition-colors">
                     Featured Work
                   </a>

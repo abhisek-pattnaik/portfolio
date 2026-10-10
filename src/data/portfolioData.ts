@@ -46,6 +46,20 @@ export interface ExperienceItem {
   skills: string[];
 }
 
+export interface CompanyExperience {
+  company: string;
+  role: string;
+  period: string;
+  location: string;
+  workMode: "Onsite" | "Hybrid" | "Remote";
+  type: string;
+  isCurrent?: boolean;
+  metrics?: { label: string; value: string }[];
+  bulletPoints: string[];
+  liveApps: string[];
+  technologies: string[];
+}
+
 export const PERSONAL_INFO = {
   name: "Abhisek",
   fullName: "Abhisek",
@@ -335,7 +349,7 @@ export const EDUCATION_DATA: EducationItem[] = [
     degree: "Master of Computer Applications (MCA)",
     institution: "Manipal University Jaipur",
     location: "Jaipur, India",
-    period: "2023 - Present (Ongoing)",
+    period: "2025 - Present (Ongoing)",
     scoreOrStatus: "Ongoing",
     highlights: [
       "Specialization in Advanced Software Architecture, Distributed Systems, and Cloud Computing.",
@@ -347,7 +361,7 @@ export const EDUCATION_DATA: EducationItem[] = [
     degree: "Bachelor of Computer Applications (BCA)",
     institution: "Berhampur University",
     location: "Berhampur, Odisha, India",
-    period: "Graduated",
+    period: "2020-2023",
     scoreOrStatus: "75% (Distinction)",
     highlights: [
       "Rigorous foundation in Data Structures, Object-Oriented Programming, and Relational Databases.",
@@ -357,33 +371,107 @@ export const EDUCATION_DATA: EducationItem[] = [
   },
 ];
 
-export const EXPERIENCE_MILESTONES: ExperienceItem[] = [
+export const COMPANY_EXPERIENCE: CompanyExperience[] = [
   {
-    role: "Full Stack Developer",
-    companyOrDomain: "Fintech & Enterprise Systems",
-    period: "Recent - Present",
-    type: "Production Engineering",
-    description: "Architecting and maintaining high-reliability fintech platforms and SaaS applications serving retail networks and end customers across India.",
-    deliverables: [
-      "Engineered mission-critical payment channels (AEPS, DMT, BBPS) with robust fallback mechanisms.",
-      "Built native Android and Flutter mobile apps with biometric scanner hardware integration.",
-      "Designed asynchronous FastAPI and C# .NET Core microservices with Redis caching and PostgreSQL.",
-      "Spearheaded end-to-end development of ongoing Salon SaaS booking platform from inception to production readiness.",
+    company: "Spay India Pvt Limited",
+    role: "Software Engineer",
+    period: "Nov 2025 – Present",
+    location: "Delhi",
+    workMode: "Onsite",
+    type: "Full-time",
+    isCurrent: true,
+    metrics: [
+      { label: "Architecture", value: ".NET WCF + Flutter" },
+      { label: "Core Modules", value: "DMT, AEPS, MATM, CMS" },
+      { label: "Hardware SDKs", value: "Fingpay Biometric" },
+      { label: "Architecture Pattern", value: "Enum State Machines" },
     ],
-    skills: ["FastAPI", "C# / .NET", "Flutter", "Kotlin", "Next.js", "PostgreSQL", "Redis"],
+    bulletPoints: [
+      "Designed and built .NET WCF APIs in C# powering Flutter applications, covering request validation, transaction processing, and status handling for banking services.",
+      "Implemented fintech modules in Flutter: DMT, AEPS, Micro ATM, Payment Gateway, CMS, and utility services (bill payments, recharges).",
+      "Delivered end-to-end features across WCF service contracts, database logic, Flutter UI, and state management.",
+      "Integrated payment and biometric SDKs on Android, including Fingpay BC, with hash-based request signing and transaction status reconciliation.",
+      "Built biometric AEPS authentication flows and refactored KYC and Re-KYC into an enum-driven state machine, improving maintainability and debugging.",
+    ],
+    liveApps: ["Spay India RT App", "Spay India DIMD"],
+    technologies: [
+      "C#",
+      ".NET WCF",
+      "Flutter",
+      "Android SDKs",
+      "Fingpay BC",
+      "AEPS Biometric",
+      "DMT",
+      "Micro ATM",
+      "Payment Gateway",
+      "CMS",
+      "State Machines",
+    ],
   },
   {
-    role: "Full Stack Web & Mobile Developer",
-    companyOrDomain: "Independent Software Solutions",
-    period: "Ongoing",
-    type: "Client Projects & SaaS",
-    description: "Designing end-to-end applications from intuitive UI mockups to cloud-deployed containers.",
-    deliverables: [
-      "Delivered full-stack products with automated CI/CD pipelines and Docker containerization.",
-      "Engineered real-time features using WebSockets and Redis Pub/Sub for zero-latency interactions.",
-      "Focused on high-converting, SEO-optimized, accessible web frontends paired with resilient APIs.",
+    company: "Prayas Financial Services Pvt Ltd",
+    role: "Android Developer",
+    period: "April 2024 – October 2025",
+    location: "Gurugram",
+    workMode: "Onsite",
+    type: "Full-time",
+    isCurrent: false,
+    metrics: [
+      { label: "API Latency Reduction", value: "30%" },
+      { label: "Failure Rate Slashed", value: "20%" },
+      { label: "App Crashes Reduced", value: "30%" },
+      { label: "Session Retention Boost", value: "+15%" },
     ],
-    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Python", "Docker", "REST APIs"],
+    bulletPoints: [
+      "Reduced API response time by 30% and improved load speed, increasing session retention by 15%.",
+      "Shipped a payments suite (mobile/DTH recharge, BBPS); integrated Easebuzz and Airpay with robust error handling, reducing transaction failures by 20% and improving processing speed by 25%.",
+      "Built a complete bus-booking flow with real-time search, booking, and transaction status tracking.",
+      "Fixed critical bugs and optimized backend interactions, reducing crashes by 30%.",
+    ],
+    liveApps: ["PrayasPe", "PrayasPe Merchant"],
+    technologies: [
+      "Android Native",
+      "Kotlin / Java",
+      "Easebuzz",
+      "Airpay",
+      "BBPS",
+      "Payment Gateways",
+      "Bus Booking Flow",
+      "REST APIs",
+      "Crashlytics",
+      "Performance Tuning",
+    ],
+  },
+];
+
+export const EXPERIENCE_MILESTONES: ExperienceItem[] = [
+  {
+    role: "Software Engineer",
+    companyOrDomain: "Spay India Pvt Limited (Delhi)",
+    period: "Nov 2025 – Present",
+    type: "Full-time (Onsite)",
+    description: "Engineering .NET WCF APIs in C# and Flutter applications for banking and fintech operations covering AEPS, DMT, Micro ATM, and biometric device integration.",
+    deliverables: [
+      "Designed and built .NET WCF APIs in C# powering Flutter apps with request validation and status reconciliation.",
+      "Implemented fintech modules in Flutter: DMT, AEPS, Micro ATM, Payment Gateway, CMS, and utility services.",
+      "Integrated Fingpay BC biometric SDK on Android with hash-based request signing.",
+      "Refactored KYC and Re-KYC into enum-driven state machines; live in Spay India RT App & DIMD.",
+    ],
+    skills: [".NET WCF", "C#", "Flutter", "Android SDK", "Fingpay BC", "AEPS", "DMT"],
+  },
+  {
+    role: "Android Developer",
+    companyOrDomain: "Prayas Financial Services Pvt Ltd (Gurugram)",
+    period: "April 2024 – October 2025",
+    type: "Full-time",
+    description: "Developed payments suite and performance-tuned Android mobile architecture powering PrayasPe and PrayasPe Merchant platforms.",
+    deliverables: [
+      "Reduced API response time by 30% and improved load speed, increasing session retention by 15%.",
+      "Integrated Easebuzz and Airpay with robust error handling, reducing transaction failures by 20%.",
+      "Engineered complete bus-booking flow with real-time search, booking, and status reconciliation.",
+      "Fixed critical bugs and optimized backend interactions, reducing app crashes by 30%.",
+    ],
+    skills: ["Android", "Kotlin", "Java", "Easebuzz", "Airpay", "BBPS", "REST APIs"],
   },
 ];
 

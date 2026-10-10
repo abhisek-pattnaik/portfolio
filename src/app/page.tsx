@@ -4,6 +4,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
+import CompanyExperience from "@/components/CompanyExperience";
 import Projects from "@/components/Projects";
 import TerminalSection from "@/components/TerminalSection";
 import EducationExperience from "@/components/EducationExperience";
@@ -24,6 +25,7 @@ export default function Home() {
         <Hero />
         <About />
         <Skills />
+        <CompanyExperience />
         <Projects />
         <TerminalSection />
         <EducationExperience />
